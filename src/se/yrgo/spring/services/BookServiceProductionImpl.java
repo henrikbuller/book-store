@@ -37,7 +37,6 @@ public class BookServiceProductionImpl implements BookService {
     @Override
     public void registerNewBook(Book newBook) {
         dao.create(newBook);
-
     }
 
     @Override
