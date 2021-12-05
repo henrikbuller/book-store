@@ -1,6 +1,7 @@
 package se.yrgo.spring.services;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import se.yrgo.spring.data.BookNotFoundException;
 import se.yrgo.spring.domain.Book;
 
@@ -10,7 +11,8 @@ public class PurchasingServiceImpl implements PurchasingService {
     private BookService books;
 
     @Override
-    public void buyBook(String isbn) throws BookNotFoundException {
+    @Transactional(rollbackFor = {CustomerCreditExceededException.class, BookNotFoundException.class})
+    public void buyBook(String isbn) throws CustomerCreditExceededException, BookNotFoundException {
         //To find the book
         Book book = books.getBookByIsbn(isbn);
 
