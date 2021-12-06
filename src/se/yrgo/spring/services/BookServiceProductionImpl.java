@@ -2,14 +2,20 @@ package se.yrgo.spring.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.spring.data.BookDao;
 import se.yrgo.spring.data.BookNotFoundException;
 import se.yrgo.spring.domain.Book;
 
 @Transactional
+@Service("bookService")
 public class BookServiceProductionImpl implements BookService {
+
+    @Autowired
     private BookDao dao;
+
     public BookServiceProductionImpl(BookDao dao) {
         this.dao = dao;
     }

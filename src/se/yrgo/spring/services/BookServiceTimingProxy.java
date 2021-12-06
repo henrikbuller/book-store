@@ -1,5 +1,6 @@
 package se.yrgo.spring.services;
 
+import org.springframework.stereotype.Component;
 import se.yrgo.spring.data.BookNotFoundException;
 import se.yrgo.spring.domain.Book;
 

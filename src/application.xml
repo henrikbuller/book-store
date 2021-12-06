@@ -2,6 +2,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
 
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
@@ -9,7 +10,9 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop.xsd">
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- DataSources -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
@@ -22,33 +25,10 @@
     </bean>
 
     <!-- Templates -->
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSource"/>
-    </bean>
-
-    <!-- Dao beans -->
-    <bean id="bookDao" class="se.yrgo.spring.data.BookDaoSpringJdbcImpl"
-          init-method="createTables">
-        <constructor-arg ref="jdbcTemplate"/>
-    </bean>
-
-    <bean id="bookService"
-          class="se.yrgo.spring.services.BookServiceProductionImpl">
-        <constructor-arg ref="bookDao">
-        </constructor-arg>
-    </bean>
-
-    <bean id="accountsService"
-          class="se.yrgo.spring.services.AccountsServiceMockImpl"/>
-
-    <bean id="purchasingService" class=
-            "se.yrgo.spring.services.PurchasingServiceImpl">
-        <constructor-arg ref="bookService"/>
-        <constructor-arg ref="accountsService"/>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" autowire="constructor">
     </bean>
 
     <!-- Advice -->
-    <bean id="performanceTimingAdvice" class="se.yrgo.spring.advice.PerformanceTimingAdvice"/>
     <aop:config>
         <aop:aspect ref="performanceTimingAdvice">
             <aop:around method="performTimingMeasurement" pointcut="execution(*
@@ -58,10 +38,12 @@
     </aop:config>
 
     <!-- Transaction Manager -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          autowire="byName">
     </bean>
 
     <!-- Transaction Configuration -->
     <tx:annotation-driven/>
+
+    <context:component-scan base-package="se.yrgo"/>
 </beans>
