@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
 import se.yrgo.spring.data.BookNotFoundException;
 import se.yrgo.spring.domain.Book;
 
+@Component("bookServiceMock")
 public class BookServiceMockImpl implements BookService {
 	private Map<String, Book> testBooks = new HashMap<String, Book>();
 

@@ -2,15 +2,20 @@ package se.yrgo.spring.services;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Propagation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.spring.data.BookDao;
 import se.yrgo.spring.data.BookNotFoundException;
 import se.yrgo.spring.domain.Book;
 
-@Transactional(propagation = Propagation.REQUIRES_NEW)
+@Transactional
+@Service("bookService")
 public class BookServiceProductionImpl implements BookService {
+
+    @Autowired
     private BookDao dao;
+
     public BookServiceProductionImpl(BookDao dao) {
         this.dao = dao;
     }
@@ -38,6 +43,7 @@ public class BookServiceProductionImpl implements BookService {
     @Override
     public void registerNewBook(Book newBook) {
         dao.create(newBook);
+
     }
 
     @Override

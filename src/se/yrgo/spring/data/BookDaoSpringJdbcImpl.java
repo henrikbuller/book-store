@@ -1,25 +1,31 @@
 package se.yrgo.spring.data;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import se.yrgo.spring.domain.Book;
 
+import javax.annotation.PostConstruct;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Repository("bookService")
 public class BookDaoSpringJdbcImpl implements BookDao {
     private JdbcTemplate jdbcTemplate;
     private static final String INSERT_BOOK_SQL = "insert into BOOK (ISBN, TITLE, AUTHOR,PRICE) values (?, ?, ?, ?) ";
     private static final String CREATE_TABLE_SQL = "create table BOOK(ISBN VARCHAR(20), TITLE VARCHAR(50), AUTHOR VARCHAR(50), PRICE DOUBLE)";
     private static final String GET_ALL_BOOKS_SQL = "select * from BOOK";
 
+    @Autowired
     public BookDaoSpringJdbcImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate=jdbcTemplate;
     }
 
+    @PostConstruct
     public void createTables() {
         try {
         jdbcTemplate.update(CREATE_TABLE_SQL);
