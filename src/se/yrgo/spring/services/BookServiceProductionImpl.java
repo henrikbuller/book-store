@@ -10,7 +10,7 @@ import se.yrgo.spring.data.BookNotFoundException;
 import se.yrgo.spring.domain.Book;
 
 @Transactional
-@Service("bookService")
+@Service
 public class BookServiceProductionImpl implements BookService {
 
     @Autowired

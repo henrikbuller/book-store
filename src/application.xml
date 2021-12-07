@@ -25,8 +25,25 @@
     </bean>
 
     <!-- Templates -->
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" autowire="constructor">
+    <bean id="hibernateTemplate"
+          class="org.springframework.orm.hibernate5.HibernateTemplate"
+          autowire="byType"/>
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan">
+            <list>
+                <value>se.yrgo.spring.domain</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
     </bean>
+
 
     <!-- Advice -->
     <aop:config>
@@ -38,9 +55,9 @@
     </aop:config>
 
     <!-- Transaction Manager -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-          autowire="byName">
-    </bean>
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+          autowire="byType"/>
 
     <!-- Transaction Configuration -->
     <tx:annotation-driven/>
