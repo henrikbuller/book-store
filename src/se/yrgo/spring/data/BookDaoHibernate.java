@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 import se.yrgo.spring.domain.Book;
 import org.hibernate.query.Query;
 
-
-@Repository
 public class BookDaoHibernate implements BookDao {
 
     @Autowired

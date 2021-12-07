@@ -25,23 +25,16 @@
     </bean>
 
     <!-- Templates -->
-    <bean id="hibernateTemplate"
-          class="org.springframework.orm.hibernate5.HibernateTemplate"
-          autowire="byType"/>
-    <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <bean id="entityManagerFactory" class=
+            "org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="jpaVendorAdapter">
+            <bean class=
+                          "org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="true"/>
+                <property name="generateDdl" value="true"/>
+            </bean>
+        </property>
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan">
-            <list>
-                <value>se.yrgo.spring.domain</value>
-            </list>
-        </property>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-            </props>
-        </property>
     </bean>
 
 
@@ -56,11 +49,11 @@
 
     <!-- Transaction Manager -->
     <bean id="transactionManager"
-          class="org.springframework.orm.hibernate5.HibernateTransactionManager"
-          autowire="byType"/>
+          class="org.springframework.orm.jpa.JpaTransactionManager"
+          autowire="byType" />
 
     <!-- Transaction Configuration -->
     <tx:annotation-driven/>
 
-    <context:component-scan base-package="se.yrgo"/>
+    <context:component-scan base-package="se.yrgo.spring"/>
 </beans>

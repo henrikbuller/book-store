@@ -1,5 +1,6 @@
 package se.yrgo.spring.client;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import se.yrgo.spring.data.BookNotFoundException;
 import se.yrgo.spring.domain.Book;

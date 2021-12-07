@@ -1,14 +1,13 @@
 package se.yrgo.spring.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.spring.data.BookNotFoundException;
 import se.yrgo.spring.domain.Book;
 
 @Transactional
-@Component
+@Service
 public class PurchasingServiceImpl implements PurchasingService {
     @Autowired
     private AccountsService accounts;

@@ -1,14 +1,8 @@
 package se.yrgo.spring.advice;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.springframework.aop.AfterReturningAdvice;
-import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
 
 @Component
 public class PerformanceTimingAdvice {
@@ -17,8 +11,7 @@ public class PerformanceTimingAdvice {
         long startTime = System.nanoTime();
 
         try {
-            Object value = method.proceed();
-            return value;
+            return method.proceed();
         } finally {
             long endTime = System.nanoTime();
             long timeTaken = endTime - startTime;
